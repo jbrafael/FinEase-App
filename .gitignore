@@ -1,0 +1,13 @@
+# Dependências do Node.js
+node_modules/
+
+# Variáveis de ambiente
+.env
+
+# Arquivos log npm
+npm-debug.log*
+
+# Docker
+*.log
+volumes/
+db_data/
