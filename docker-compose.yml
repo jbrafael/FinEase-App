@@ -8,8 +8,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./backend:/app 
-      - /app/node_modules 
+      - ./backend:/app # Mapeia a pasta backend para o diretório de trabalho do container
+      - /app/node_modules # Garante que as dependências persistam
+    depends_on:
       - db
     environment:
       - DB_HOST=db

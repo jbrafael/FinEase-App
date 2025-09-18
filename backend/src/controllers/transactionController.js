@@ -1,10 +1,9 @@
 const db = require('../config/db');
+const MOCKED_USER_ID = 1;
 
 exports.getTransactions = async (req, res) => {
-    const userId = 1; 
-
     try {
-        const [rows] = await db.execute('SELECT * FROM transactions WHERE user_id = ? ORDER BY date DESC', [userId]);
+        const [rows] = await db.execute('SELECT * FROM transactions WHERE user_id = ? ORDER BY date DESC', [MOCKED_USER_ID]);
         res.status(200).json(rows);
     } catch (error) {
         console.error('Erro ao buscar transações:', error);
@@ -13,7 +12,6 @@ exports.getTransactions = async (req, res) => {
 };
 
 exports.createTransaction = async (req, res) => {
-    const userId = 1;
     const { description, amount, type, category, date } = req.body;
 
     if (!description || !amount || !type || !date) {
@@ -23,7 +21,7 @@ exports.createTransaction = async (req, res) => {
     try {
         await db.execute(
             'INSERT INTO transactions (user_id, description, amount, type, category, date) VALUES (?, ?, ?, ?, ?, ?)',
-            [userId, description, amount, type, category, date]
+            [MOCKED_USER_ID, description, amount, type, category, date]
         );
         res.status(201).json({ message: 'Transação criada com sucesso!' });
     } catch (error) {
@@ -33,7 +31,6 @@ exports.createTransaction = async (req, res) => {
 };
 
 exports.updateTransaction = async (req, res) => {
-    const userId = 1; 
     const { id } = req.params;
     const { description, amount, type, category, date } = req.body;
 
@@ -44,7 +41,7 @@ exports.updateTransaction = async (req, res) => {
     try {
         const [result] = await db.execute(
             'UPDATE transactions SET description = ?, amount = ?, type = ?, category = ?, date = ? WHERE id = ? AND user_id = ?',
-            [description, amount, type, category, date, id, userId]
+            [description, amount, type, category, date, id, MOCKED_USER_ID]
         );
 
         if (result.affectedRows === 0) {
@@ -59,11 +56,10 @@ exports.updateTransaction = async (req, res) => {
 };
 
 exports.deleteTransaction = async (req, res) => {
-    const userId = 1; 
     const { id } = req.params;
 
     try {
-        const [result] = await db.execute('DELETE FROM transactions WHERE id = ? AND user_id = ?', [id, userId]);
+        const [result] = await db.execute('DELETE FROM transactions WHERE id = ? AND user_id = ?', [id, MOCKED_USER_ID]);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Transação não encontrada ou você não tem permissão para deletá-la.' });
