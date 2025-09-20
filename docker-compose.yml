@@ -15,14 +15,14 @@ services:
     environment:
       - DB_HOST=db
       - DB_USER=root
-      - DB_PASSWORD=''
+      - DB_PASSWORD=sua_senha_mysql # Certifique-se de que a senha está aqui
       - DB_NAME=personal_finance_db
 
   db:
     image: mysql:8.0
     container_name: mysql_fin_ease
     environment:
-      - MYSQL_ROOT_PASSWORD=''
+      - MYSQL_ROOT_PASSWORD=sua_senha_mysql # E aqui
       - MYSQL_DATABASE=personal_finance_db
     ports:
       - "3306:3306"

@@ -2,14 +2,19 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Copia apenas os arquivos de dependências primeiro
+# Copia apenas o package.json para otimizar o cache
 COPY package*.json ./
 
+# Instala as dependências da aplicação
 RUN npm install
 
-# Agora copia o restante do código
+# Instala o wait-port globalmente
+RUN npm install -g wait-port
+
+# Copia todo o código da aplicação
 COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+# Comando de inicialização (aguarda o MySQL antes de rodar)
+CMD ["sh", "-c", "wait-port db:3306 && npm run dev"]
