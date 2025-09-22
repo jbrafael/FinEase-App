@@ -11,11 +11,11 @@ function LandingPage() {
           FinEase
         </div>
         <nav className="space-x-4">
-          <a href="#" className="text-gray-600 hover:text-blue-600">Login</a>
-          <a href="/dashboard" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-            Começar agora
-          </a>
-        </nav>
+           <Link to="/auth" className="text-gray-600 hover:text-blue-600">Login</Link>
+           <Link to="/dashboard" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+         Começar agora
+           </Link>
+         </nav>
       </header>
 
       {/* HERO SECTION: O destaque principal da página */}

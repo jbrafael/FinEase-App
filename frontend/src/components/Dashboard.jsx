@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-100 p-8 flex items-center justify-center">

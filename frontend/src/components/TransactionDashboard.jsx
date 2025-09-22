@@ -192,8 +192,8 @@ function TransactionDashboard() {
               className="button button-save"
             >
               {isSubmitting ? (
-                <div className="flex items-center gap-2 justify-center">
-                  <Loader2 size={18} className="animate-spin" />
+                <div className="flex items-center gap-2">
+                  <Loader2 size={18} className="animate-spin" /> Salvando...
                 </div>
               ) : (
                 isEditing ? 'Salvar Edição' : 'Adicionar Transação'
