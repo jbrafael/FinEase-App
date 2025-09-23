@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Loader2, Trash2, Edit } from 'lucide-react';
-import './TransactionDashboard.css';
+import './TransactionDashboard.css'; 
 
 function TransactionDashboard() {
   const [transactions, setTransactions] = useState([]);

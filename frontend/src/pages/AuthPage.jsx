@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { User, Lock, Loader2 } from 'lucide-react';
+import { User, Lock, Loader2, Eye, EyeOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [form, setForm] = useState({ username: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,9 +38,15 @@ function AuthPage() {
         throw new Error(data.message || 'Falha na autenticação.');
       }
 
-      // Em um projeto real, você salvaria o token de autenticação aqui
       console.log('Autenticação bem-sucedida:', data);
       alert(isLogin ? 'Login bem-sucedido!' : 'Registro bem-sucedido!');
+      
+if (isLogin) {
+    login(data); 
+} else {
+    alert('Registro bem-sucedido! Agora faça o login.');
+    setIsLogin(true);
+      }
 
     } catch (err) {
       setError(err.message);
@@ -47,9 +56,9 @@ function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md text-center">
-        <h2 className="text-2xl font-bold mb-6">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">
           {isLogin ? 'Login' : 'Criar Conta'}
         </h2>
         
@@ -75,14 +84,20 @@ function AuthPage() {
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               name="password"
               value={form.password}
               onChange={handleChange}
               placeholder="Senha"
-              className="w-full pl-10 pr-3 py-2 border rounded-md focus:ring focus:ring-blue-200"
+              className="w-full pl-10 pr-10 py-2 border rounded-md focus:ring focus:ring-blue-200"
               required
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </span>
           </div>
           <button
             type="submit"
